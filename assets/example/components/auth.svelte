@@ -1,0 +1,11 @@
+<div>
+  <span>
+    {$i18n('firstName')}
+  </span>
+  <span>
+    {$i18n('lastName')}
+  </span>
+  <span>
+    {$i18n('password')}
+  </span>
+</div>
