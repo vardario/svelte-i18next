@@ -105,7 +105,7 @@ export const i18nProcessor = (options?: I18nProcessorOptions): PreprocessorGroup
         adjustI18nKeys(ast, keyPath, callIdentifier);
 
         const transformedCode = printHtml({ ast, indent: options?.indent });
-        const result = `${scriptTags.join('\n')}${scriptTags.length ? "'n" : ''}${transformedCode}`;
+        const result = `${scriptTags.join('\n')}${scriptTags.length ? '\n' : ''}${transformedCode}`;
         return { code: result };
       }
       return {

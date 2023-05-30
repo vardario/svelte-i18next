@@ -30,7 +30,7 @@ export async function scanDir(dir: string, filter?: (file: string) => boolean) {
 }
 
 export function stripScriptTag(code: string) {
-  const scriptTagRegEx = /<.*?script.*?>(.*?)<\/.*?script.*?>/gi;
+  const scriptTagRegEx = /(<script[\s\S]*?[\s\S\]*?>[\s\S]*?<\/script>)/gi;
   const scriptTags: string[] = [];
 
   for (const match of code.matchAll(scriptTagRegEx)) {
