@@ -6,6 +6,12 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import url from 'node:url';
 
+const CSV_OPTIONS = {
+  delimiter: ';',
+  trim: true,
+  bom: true
+};
+
 export async function scanDir(dir: string, filter?: (file: string) => boolean) {
   const result: string[] = [];
 
@@ -86,9 +92,18 @@ export function recordsToCsv(items: Record<string, string>) {
 
   return stringify(
     csv.sort((a, b) => a[0].localeCompare(b[0])),
-    {
-      bom: true,
-      delimiter: ';'
-    }
+    CSV_OPTIONS
   );
+}
+
+export function csvToI18Next(csv: string) {
+  const object = {};
+
+  const items = parse(csv, CSV_OPTIONS) as string[];
+
+  for (const item of items) {
+    const [path, value] = item;
+    _.set(object, path, value);
+  }
+  return object;
 }
