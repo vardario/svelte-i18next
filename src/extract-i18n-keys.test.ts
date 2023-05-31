@@ -12,16 +12,16 @@ describe('extract-i18n-keys', () => {
 
     expect(keys.sort()).toStrictEqual(
       [
-        'translation.components.auth.firstName',
-        'translation.components.auth.lastName',
-        'translation.components.auth.password',
-        'translation.components.user-form.firstName',
-        'translation.components.user-form.lastName',
-        'translation.routes.about.page.intro',
-        'translation.routes.layout.header',
-        'translation.routes.page.intro',
-        'translation.routes.page.known-from',
-        'translation.routes.team.page.team-intro'
+        'components.auth.firstName',
+        'components.auth.lastName',
+        'components.auth.password',
+        'components.user-form.firstName',
+        'components.user-form.lastName',
+        'routes.about.page.intro',
+        'routes.layout.header',
+        'routes.page.intro',
+        'routes.page.known-from',
+        'routes.team.page.team-intro'
       ].sort()
     );
   });

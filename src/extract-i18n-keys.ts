@@ -65,5 +65,5 @@ export async function extractI18NextKeys(dirSvelteApps: string[]) {
     result.push(...appResult);
   }
 
-  return result.map(key => `translation.${key}`).sort();
+  return result.map(key => `${key}`).sort();
 }

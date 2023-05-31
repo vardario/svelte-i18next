@@ -67,6 +67,7 @@ export function diffLanguageFile(params: DiffProps) {
 
 export async function isInSync(params: SynchroniesParams) {
   const keys = await extractI18NextKeys(params.dirs);
+  let result = true;
 
   for (const language of params.languages) {
     const languageFile = path.resolve(params.output, language) + '.csv';
@@ -85,9 +86,9 @@ export async function isInSync(params: SynchroniesParams) {
       console.error(`${languageFile} is not in sync!`);
       console.error('adds', JSON.stringify(added, null, 2));
       console.error('removals', JSON.stringify(removed, null, 2));
-      return false;
+      result = false;
     }
   }
 
-  return true;
+  return result;
 }
