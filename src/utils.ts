@@ -1,16 +1,6 @@
-import { parse } from 'csv-parse/sync';
-import { stringify } from 'csv-stringify/sync';
-
-import _ from 'lodash';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import url from 'node:url';
-
-const CSV_OPTIONS = {
-  delimiter: ';',
-  trim: true,
-  bom: true
-};
 
 export async function scanDir(dir: string, filter?: (file: string) => boolean) {
   const result: string[] = [];
@@ -35,75 +25,10 @@ export async function scanDir(dir: string, filter?: (file: string) => boolean) {
   return result.sort();
 }
 
-export function stripScriptTag(code: string) {
-  const scriptTagRegEx = /(<script[\s\S]*?[\s\S\]*?>[\s\S]*?<\/script>)/gi;
-  const scriptTags: string[] = [];
 
-  for (const match of code.matchAll(scriptTagRegEx)) {
-    scriptTags.push(match[0]);
-  }
-
-  return { code: code.replace(scriptTagRegEx, ''), scriptTags };
-}
 
 export function __dirname(meta: ImportMeta) {
   const __filename = url.fileURLToPath(import.meta.url);
   return path.dirname(__filename);
 }
 
-export function extractKeyPathFromFile(filename: string) {
-  filename = filename.split('.').slice(0, -1).join('.');
-  const regEx = /(components|routes)/;
-  const match = regEx.exec(filename);
-  if (match === null) {
-    throw new Error(`${filename} is not valid.`);
-  }
-
-  const pathParts = filename.split(path.sep);
-  const index = pathParts.findIndex(pathPart => regEx.exec(pathPart));
-
-  const result = pathParts.slice(index).join('.');
-  return result.replace('.svelte', '').replace('+', '');
-}
-
-export function parseCsv(csv: string): Record<string, string> {
-  const items = parse(csv, {
-    delimiter: ';',
-    trim: true,
-    bom: true
-  }) as string[][];
-
-  return items.reduce((acc, item) => {
-    if (item.length === 2) {
-      acc[item[0]] = item[1];
-    }
-
-    return acc;
-  }, {} as Record<string, string>);
-}
-
-export function recordsToCsv(items: Record<string, string>) {
-  const keys = _.keys(items);
-  const values = _.values(items);
-  const csv = keys.reduce((acc, key, index) => {
-    acc.push([key, values[index]]);
-    return acc;
-  }, [] as string[][]);
-
-  return stringify(
-    csv.sort((a, b) => a[0].localeCompare(b[0])),
-    CSV_OPTIONS
-  );
-}
-
-export function csvToI18Next(csv: string) {
-  const object = {};
-
-  const items = parse(csv, CSV_OPTIONS) as string[];
-
-  for (const item of items) {
-    const [path, value] = item;
-    _.set(object, path, value);
-  }
-  return object;
-}

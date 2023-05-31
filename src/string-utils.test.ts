@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { extractKeyPathFromFile, stripScriptTag } from './utils.js';
+import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
 
-describe('utils', () => {
+describe('string-utils', () => {
   test('extractPrefixFromFile', () => {
     expect(extractKeyPathFromFile('example/components/auth.svelte')).toBe('components.auth');
     expect(extractKeyPathFromFile('example/components/sub-component/auth.svelte')).toBe(

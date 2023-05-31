@@ -3,7 +3,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import * as compiler from 'svelte/compiler';
 import { Ast } from 'svelte/types/compiler/interfaces.js';
-import { extractKeyPathFromFile, scanDir, stripScriptTag } from './utils.js';
+import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
+import { scanDir } from './utils.js';
 
 function extractKeysFromComponent(ast: Ast, callIdentifier: string): string[] {
   const result: string[] = [];
