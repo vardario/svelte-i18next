@@ -4,7 +4,7 @@ import { CallExpression, Node } from 'estree';
 import * as compiler from 'svelte/compiler';
 import { Ast, TemplateNode } from 'svelte/types/compiler/interfaces';
 import type { PreprocessorGroup } from 'svelte/types/compiler/preprocess';
-import { extractKeyPathFromFile, stripScriptTag } from './utils.js';
+import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
 
 export function create18nCallLabelAttribute(callIdentifier: string, i18nKey: string) {
   const expression = parse(`${callIdentifier}("${i18nKey}")`, { ecmaVersion: 'latest' });

@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { extractI18NextKeys } from './extract-i18n-keys.js';
-import { parseCsv, recordsToCsv } from './utils.js';
+import { parseCsv, recordsToCsv } from './csv-utils.js';
 
 export const TODO_STRING = 'xxxTODOxxx';
 
