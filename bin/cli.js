@@ -5,8 +5,8 @@ import { isInSync, synchronies } from '../lib/cli.js';
 
 program.name('svelte-i18next');
 program
-  .command('synchronies')
-  .description('synchronies all translations keys from the given svelte app with translation files')
+  .command('synchronize')
+  .description('synchronizes all translations keys from the given svelte app with translation files')
   .requiredOption('--dirs <string...>', 'path to svelte apps')
   .requiredOption('--languages <string...>')
   .requiredOption('--output <string>')
