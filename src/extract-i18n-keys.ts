@@ -23,7 +23,7 @@ function extractKeysFromComponent(ast: Ast, callIdentifier: string): string[] {
         }
       }
 
-      if (node.type === 'InlineComponent' && node.name === 'Input') {
+      if (node.type === 'InlineComponent' && ['Input', 'Checkbox'].includes(node.name)) {
         const nameAttribute = node.attributes?.find((attr: any) => attr.name === 'name');
         if (nameAttribute) {
           result.push(nameAttribute.value[0].data);
