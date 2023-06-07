@@ -50,7 +50,7 @@ export function adjustI18nCall(ast: Ast, prefix: string, callIdentifier: string 
 export function adjustInputElementLabels(ast: Ast, prefix: string, callIdentifier: string = '$i18n') {
   compiler.walk(ast.html, {
     enter: (node: TemplateNode) => {
-      if (node.type === 'InlineComponent' && node.name === 'Input') {
+      if (node.type === 'InlineComponent' && ['Input', 'Checkbox'].includes(node.name)) {
         const nameAttribute = node.attributes?.find((attr: any) => attr.name === 'name');
         const labelAttribute = node.attributes?.find((attr: any) => attr.name === 'label');
 
