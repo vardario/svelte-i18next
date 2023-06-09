@@ -49,7 +49,7 @@ export async function processSvelteFile(
 
   const addKeyPath = (key: string) => {
     const path = extractKeyPathFromFile(filename);
-    return `${path}.${key}`;
+    return `${path}.${key}`.replace(/\[|\]/g, '');
   };
 
   return keys.map(addKeyPath);
