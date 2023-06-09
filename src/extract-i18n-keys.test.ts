@@ -21,7 +21,8 @@ describe('extract-i18n-keys', () => {
         'routes.layout.header',
         'routes.page.intro',
         'routes.page.known-from',
-        'routes.team.page.team-intro'
+        'routes.team.page.team-intro',
+        'routes.users.userId.page.user-message'
       ].sort()
     );
   });
