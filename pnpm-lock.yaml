@@ -1,12 +1,16 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 dependencies:
   '@types/lodash':
     specifier: ^4.14.195
     version: 4.14.195
   '@vardario/svelte-ast-printer':
-    specifier: ^0.1.3
-    version: 0.1.3
+    specifier: ^0.1.4
+    version: 0.1.4
   acorn:
     specifier: ^8.8.2
     version: 8.8.2
@@ -310,8 +314,8 @@ packages:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
     dev: true
 
-  /@vardario/svelte-ast-printer@0.1.3:
-    resolution: {integrity: sha512-W4uTIigu4OaqEKsZcpLbexJdm8qof+IdRsx826VkVJv2L3O+LXy9Z8HRs2bfWQn9stAj52yne74E5Y1ZXW2iNw==}
+  /@vardario/svelte-ast-printer@0.1.4:
+    resolution: {integrity: sha512-GGge5V+JKEzuGClJRJvbCv7i4P+As00KL5n/ck1ynKB7H1Bb+9U0m43VBZ3dzxuZLc0pJJfWzq40PuzdNhXulQ==}
     requiresBuild: true
     dependencies:
       astring: 1.8.5
