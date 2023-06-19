@@ -1,5 +1,6 @@
 import printHtml, { PrinterIdentOptions } from '@vardario/svelte-ast-printer';
 import { parse } from 'acorn';
+import { generate } from 'astring';
 import { CallExpression, Node } from 'estree';
 import * as compiler from 'svelte/compiler';
 import { Ast, TemplateNode } from 'svelte/types/compiler/interfaces';
@@ -30,7 +31,7 @@ export function create18nCallLabelAttribute(callIdentifier: string, i18nKey: str
   };
 }
 
-export function adjustI18nCall(ast: Ast, prefix: string, callIdentifier: string = '$i18n') {
+export function adjustI18nCall(ast: Ast | Node, prefix: string, callIdentifier: string = '$i18n') {
   compiler.walk(ast, {
     enter: function (node: Node) {
       if (node.type === 'CallExpression') {
@@ -86,31 +87,53 @@ export interface I18nProcessorOptions {
   indent?: PrinterIdentOptions;
 }
 
+async function preprocess(
+  content: string,
+  filename: string | undefined,
+  cb: () => Promise<{ code: string }>
+): Promise<{ code: string }> {
+  if (filename === undefined) {
+    return { code: content };
+  }
+
+  if (/node_modules/g.exec(filename) !== null) {
+    return {
+      code: content
+    };
+  }
+
+  if (/(components\/|routes\/)/g.exec(filename) !== null) {
+    return cb();
+  }
+
+  return {
+    code: content
+  };
+}
+
 export const i18nProcessor = (options?: I18nProcessorOptions): PreprocessorGroup => {
   const callIdentifier = options?.callIdentifier ?? '$i18n';
   return {
     async markup({ content, filename }) {
-      if (/node_modules/g.exec(filename ?? '') !== null) {
-        return {
-          code: content
-        };
-      }
-
-      const match = /(components\/|routes\/)/g.exec(filename ?? '');
-      if (match !== null) {
+      return preprocess(content, filename, async () => {
         const { code, scriptTags } = stripScriptTag(content);
         const ast = compiler.parse(code);
-        const keyPath = extractKeyPathFromFile(filename ?? '');
+        const keyPath = extractKeyPathFromFile(filename!);
 
         adjustI18nKeys(ast, keyPath, callIdentifier);
 
         const transformedCode = printHtml({ ast, indent: options?.indent });
         const result = `${scriptTags.join('\n')}${scriptTags.length ? '\n' : ''}${transformedCode}`;
         return { code: result };
-      }
-      return {
-        code: content
-      };
+      });
+    },
+    async script({ content, filename }) {
+      return preprocess(content, filename, async () => {
+        const program = parse(content, { ecmaVersion: 'latest' }) as Node;
+        const keyPath = extractKeyPathFromFile(filename!);
+        adjustI18nCall(program, keyPath, callIdentifier);
+        return { code: generate(program) };
+      });
     }
   };
 };

@@ -20,7 +20,10 @@ describe('extract-i18n-keys', () => {
         'routes.about.page.intro',
         'routes.layout.header',
         'routes.page.intro',
+        'routes.page.item0',
+        'routes.page.item1',
         'routes.page.known-from',
+        'routes.page.title',
         'routes.team.page.team-intro',
         'routes.users.userId.page.user-message'
       ].sort()

@@ -6,6 +6,9 @@ components.user-form.lastName;xxxTODOxxx
 routes.about.page.intro;xxxTODOxxx
 routes.layout.header;xxxTODOxxx
 routes.page.intro;xxxTODOxxx
+routes.page.item0;xxxTODOxxx
+routes.page.item1;xxxTODOxxx
 routes.page.known-from;xxxTODOxxx
+routes.page.title;xxxTODOxxx
 routes.team.page.team-intro;xxxTODOxxx
 routes.users.userId.page.user-message;xxxTODOxxx
