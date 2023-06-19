@@ -1,25 +1,29 @@
+//@ts-expect-error
+import { vitePreprocess } from '@sveltejs/kit/vite';
+import * as acorn from 'acorn';
+import { CallExpression, Node } from 'estree';
 import _ from 'lodash';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import * as compiler from 'svelte/compiler';
 import { Ast } from 'svelte/types/compiler/interfaces.js';
+import { PreprocessorGroup } from 'svelte/types/compiler/preprocess';
 import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
 import { scanDir } from './utils.js';
 
-function extractKeysFromComponent(ast: Ast, callIdentifier: string): string[] {
+function extractI18nKeys(ast: Ast | Node, callIdentifier: string): string[] {
   const result: string[] = [];
 
-  compiler.walk(ast.html, {
+  compiler.walk(ast, {
     enter: (node: any) => {
-      if (
-        node.type === 'CallExpression' &&
-        node.callee &&
-        node.callee.type === 'Identifier' &&
-        node.callee.name === callIdentifier
-      ) {
-        const [firstArgument] = node.arguments.length > 0 && node.arguments;
-        if (firstArgument && firstArgument.type === 'Literal') {
-          result.push(firstArgument.value);
+      if (node.type === 'CallExpression') {        
+        const callExpressionNode = node as CallExpression;
+        const { callee } = callExpressionNode;
+        if (callee.type === 'Identifier' && callee.name === callIdentifier) {
+          const [arg] = node.arguments;
+          if (arg.type === 'Literal' && arg.value) {
+            result.push(arg.value);
+          }
         }
       }
 
@@ -41,11 +45,26 @@ export async function processSvelteFile(
   callIdentifier: string = '$i18n'
 ): Promise<string[]> {
   let rawCode = (await fs.readFile(file)).toString('utf-8');
-  const { code } = stripScriptTag(rawCode);
+  const keys: string[] = [];
 
   const filename = path.relative(dirSvelteApp, file);
-  const ast = compiler.parse(code);
-  const keys = extractKeysFromComponent(ast, callIdentifier);
+  const preprocessExtract = (): PreprocessorGroup => {
+    return {
+      async markup({ content, filename }) {
+        const { code } = stripScriptTag(rawCode);
+        const ast = compiler.parse(code);
+        keys.push(...extractI18nKeys(ast, callIdentifier));
+        return { code: content };
+      },
+      async script({ content, filename }) {
+        const ast = acorn.parse(content, { ecmaVersion: 'latest' }) as Node;
+        keys.push(...extractI18nKeys(ast, callIdentifier));
+        return { code: content };
+      }
+    };
+  };
+
+  await compiler.preprocess(rawCode, [vitePreprocess(), preprocessExtract()], { filename });
 
   const addKeyPath = (key: string) => {
     const path = extractKeyPathFromFile(filename);
