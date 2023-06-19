@@ -57,7 +57,7 @@ export async function processSvelteFile(
         return { code: content };
       },
       async script({ content, filename }) {
-        const ast = acorn.parse(content, { ecmaVersion: 'latest' }) as Node;
+        const ast = acorn.parse(content, { ecmaVersion: 'latest', sourceType:'module' }) as Node;
         keys.push(...extractI18nKeys(ast, callIdentifier));
         return { code: content };
       }
