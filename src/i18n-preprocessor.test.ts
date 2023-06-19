@@ -4,19 +4,24 @@ import * as compiler from 'svelte/compiler';
 import { describe, expect, test } from 'vitest';
 import { i18nProcessor } from './i18n-preprocessor.js';
 import { __dirname } from './utils.js';
+//@ts-expect-error
+import { vitePreprocess } from '@sveltejs/kit/vite';
 
 const examplePath = path.resolve(__dirname(import.meta), '../assets/example');
-const preprocessor = i18nProcessor({
-  indent: {
-    indent: '',
-    lineEnd: ''
-  }
-});
+const preprocessors = [
+  vitePreprocess(),
+  i18nProcessor({
+    indent: {
+      indent: '',
+      lineEnd: ''
+    }
+  })
+];
 
 async function testComponent(filename: string, expectation: string) {
   const componentPath = path.resolve(examplePath, filename);
   const componentContent = (await fs.readFile(componentPath)).toString('utf-8');
-  const preprocessed = await compiler.preprocess(componentContent, preprocessor, { filename });
+  const preprocessed = await compiler.preprocess(componentContent, preprocessors, { filename });
 
   expect(preprocessed.code).toBe(expectation);
 }

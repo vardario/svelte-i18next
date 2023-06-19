@@ -129,7 +129,7 @@ export const i18nProcessor = (options?: I18nProcessorOptions): PreprocessorGroup
     },
     async script({ content, filename }) {
       return preprocess(content, filename, async () => {
-        const program = parse(content, { ecmaVersion: 'latest' }) as Node;
+        const program = parse(content, { ecmaVersion: 'latest', sourceType:'module' }) as Node;
         const keyPath = extractKeyPathFromFile(filename!);
         adjustI18nCall(program, keyPath, callIdentifier);
         return { code: generate(program) };
