@@ -6,6 +6,7 @@ import * as compiler from 'svelte/compiler';
 import { Ast, TemplateNode } from 'svelte/types/compiler/interfaces';
 import type { PreprocessorGroup } from 'svelte/types/compiler/preprocess';
 import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
+import { SUPPORTED_COMPONENTS } from './utils.js';
 
 export function create18nCallLabelAttribute(callIdentifier: string, i18nKey: string) {
   const expression = parse(`${callIdentifier}("${i18nKey}")`, { ecmaVersion: 'latest' });
@@ -51,7 +52,7 @@ export function adjustI18nCall(ast: Ast | Node, prefix: string, callIdentifier: 
 export function adjustInputElementLabels(ast: Ast, prefix: string, callIdentifier: string = '$i18n') {
   compiler.walk(ast.html, {
     enter: (node: TemplateNode) => {
-      if (node.type === 'InlineComponent' && ['Input', 'Checkbox'].includes(node.name)) {
+      if (node.type === 'InlineComponent' && SUPPORTED_COMPONENTS.includes(node.name)) {
         const nameAttribute = node.attributes?.find((attr: any) => attr.name === 'name');
         const labelAttribute = node.attributes?.find((attr: any) => attr.name === 'label');
 
@@ -129,7 +130,7 @@ export const i18nProcessor = (options?: I18nProcessorOptions): PreprocessorGroup
     },
     async script({ content, filename }) {
       return preprocess(content, filename, async () => {
-        const program = parse(content, { ecmaVersion: 'latest', sourceType:'module' }) as Node;
+        const program = parse(content, { ecmaVersion: 'latest', sourceType: 'module' }) as Node;
         const keyPath = extractKeyPathFromFile(filename!);
         adjustI18nCall(program, keyPath, callIdentifier);
         return { code: generate(program) };

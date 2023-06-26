@@ -9,14 +9,14 @@ import * as compiler from 'svelte/compiler';
 import { Ast } from 'svelte/types/compiler/interfaces.js';
 import { PreprocessorGroup } from 'svelte/types/compiler/preprocess';
 import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
-import { scanDir } from './utils.js';
+import { SUPPORTED_COMPONENTS, scanDir } from './utils.js';
 
 function extractI18nKeys(ast: Ast | Node, callIdentifier: string): string[] {
   const result: string[] = [];
 
   compiler.walk(ast, {
     enter: (node: any) => {
-      if (node.type === 'CallExpression') {        
+      if (node.type === 'CallExpression') {
         const callExpressionNode = node as CallExpression;
         const { callee } = callExpressionNode;
         if (callee.type === 'Identifier' && callee.name === callIdentifier) {
@@ -27,7 +27,7 @@ function extractI18nKeys(ast: Ast | Node, callIdentifier: string): string[] {
         }
       }
 
-      if (node.type === 'InlineComponent' && ['Input', 'Checkbox'].includes(node.name)) {
+      if (node.type === 'InlineComponent' && SUPPORTED_COMPONENTS.includes(node.name)) {
         const nameAttribute = node.attributes?.find((attr: any) => attr.name === 'name');
         if (nameAttribute) {
           result.push(nameAttribute.value[0].data);
@@ -57,7 +57,7 @@ export async function processSvelteFile(
         return { code: content };
       },
       async script({ content, filename }) {
-        const ast = acorn.parse(content, { ecmaVersion: 'latest', sourceType:'module' }) as Node;
+        const ast = acorn.parse(content, { ecmaVersion: 'latest', sourceType: 'module' }) as Node;
         keys.push(...extractI18nKeys(ast, callIdentifier));
         return { code: content };
       }

@@ -25,10 +25,9 @@ export async function scanDir(dir: string, filter?: (file: string) => boolean) {
   return result.sort();
 }
 
-
-
 export function __dirname(meta: ImportMeta) {
   const __filename = url.fileURLToPath(import.meta.url);
   return path.dirname(__filename);
 }
 
+export const SUPPORTED_COMPONENTS = ['Input', 'Checkbox', 'Select', 'BubbleSelect', 'LocalizedInput'];

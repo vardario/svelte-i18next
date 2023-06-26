@@ -1,8 +1,11 @@
 ﻿components.auth.firstName;xxxTODOxxx
 components.auth.lastName;xxxTODOxxx
 components.auth.password;xxxTODOxxx
+components.user-form.amenities;xxxTODOxxx
+components.user-form.countryCode;xxxTODOxxx
 components.user-form.firstName;xxxTODOxxx
 components.user-form.lastName;xxxTODOxxx
+components.user-form.text;xxxTODOxxx
 routes.about.page.intro;xxxTODOxxx
 routes.layout.header;xxxTODOxxx
 routes.page.intro;xxxTODOxxx
