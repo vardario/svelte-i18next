@@ -33,6 +33,9 @@ describe('i18n-preprocessor', () => {
       `<Form>
     <Input name="firstName" label={$i18n("components.user-form.firstName")}/>
     <Input name="lastName" label={$i18n("components.user-form.lastName")}/>
+    <Select name="countryCode" label={$i18n("components.user-form.countryCode")}/>
+    <BubbleSelect name="amenities" label={$i18n("components.user-form.amenities")}/>
+    <LocalizedInput name="text" label={$i18n("components.user-form.text")}/>
 </Form>`
     );
   });
