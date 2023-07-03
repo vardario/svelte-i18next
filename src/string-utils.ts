@@ -23,5 +23,5 @@ export function extractKeyPathFromFile(filename: string) {
   const index = pathParts.findIndex(pathPart => regEx.exec(pathPart));
 
   const result = pathParts.slice(index).join('.');
-  return result.replace('.svelte', '').replace('+', '').replace(/\[|\]/g, '');
+  return result.replace('.svelte', '').replace('+', '').replace(/\[|\]/g, '').replace(/\((.+)\)\./, '');
 }

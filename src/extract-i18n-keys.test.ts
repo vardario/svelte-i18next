@@ -8,7 +8,7 @@ describe('extract-i18n-keys', () => {
     const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
     const exampleDir = path.resolve(__dirname, '../assets/example');
 
-    const keys = await extractI18NextKeys([exampleDir]);    
+    const keys = await extractI18NextKeys([exampleDir]);
 
     expect(keys.sort()).toStrictEqual(
       [
