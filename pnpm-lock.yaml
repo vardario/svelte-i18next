@@ -12,8 +12,8 @@ dependencies:
     specifier: ^4.14.195
     version: 4.14.195
   '@vardario/svelte-ast-printer':
-    specifier: ^0.1.5
-    version: 0.1.5
+    specifier: ^0.1.6
+    version: 0.1.6
   acorn:
     specifier: ^8.8.2
     version: 8.8.2
@@ -367,8 +367,8 @@ packages:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
     dev: true
 
-  /@vardario/svelte-ast-printer@0.1.5:
-    resolution: {integrity: sha512-eWEB8uQwRBwke1xdCSmOQTWd5qJwF5clbkdSZWd2Bf3sEz6Prf9nAGUrTCnszYklA0TK7xIPpAXfXvTJRC7reQ==}
+  /@vardario/svelte-ast-printer@0.1.6:
+    resolution: {integrity: sha512-r6CGUaex+7QNAUrRYruTot4IKOrKQfIJhQJe63Ej+7VILD/kb83U3+zozJJ0NwtyHG18rO3grz9Lwd4vh/E2vg==}
     requiresBuild: true
     dependencies:
       astring: 1.8.6
