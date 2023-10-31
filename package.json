@@ -1,6 +1,6 @@
 {
   "name": "@vardario/svelte-i18next",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "",
   "license": "MIT",
   "author": "Sahin Vardar",
@@ -24,7 +24,7 @@
   "dependencies": {
     "@sveltejs/kit": "^1.20.4",
     "@types/lodash": "^4.14.195",
-    "@vardario/svelte-ast-printer": "^0.1.5",
+    "@vardario/svelte-ast-printer": "^0.1.6",
     "acorn": "^8.8.2",
     "astring": "^1.8.6",
     "commander": "^10.0.1",
