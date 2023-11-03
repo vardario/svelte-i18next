@@ -9,7 +9,7 @@ import * as compiler from 'svelte/compiler';
 import { Ast } from 'svelte/types/compiler/interfaces.js';
 import { PreprocessorGroup } from 'svelte/types/compiler/preprocess';
 import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
-import { SUPPORTED_COMPONENTS, scanDir } from './utils.js';
+import {  scanDir } from './utils.js';
 
 function extractI18nKeys(ast: Ast | Node, callIdentifier: string): string[] {
   const result: string[] = [];
@@ -27,7 +27,7 @@ function extractI18nKeys(ast: Ast | Node, callIdentifier: string): string[] {
         }
       }
 
-      if (node.type === 'InlineComponent' && SUPPORTED_COMPONENTS.includes(node.name)) {
+      if (node.type === 'InlineComponent') {
         const nameAttribute = node.attributes?.find((attr: any) => attr.name === 'name');
         if (nameAttribute) {
           result.push(nameAttribute.value[0].data);
