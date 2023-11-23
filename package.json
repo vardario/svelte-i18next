@@ -17,7 +17,8 @@
     "format": "prettier --plugin-search-dir . --write . && prettier-package-json --write",
     "preinstall": "npx only-allow pnpm",
     "test": "vitest run",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "repo-clean": "git clean -xdf -e .env"
   },
   "dependencies": {
     "commander": "^10.0.1"
