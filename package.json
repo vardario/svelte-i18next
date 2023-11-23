@@ -4,6 +4,10 @@
   "description": "CLI and library to handle i18next translations in SvelteKit",
   "license": "MIT",
   "author": "Sahin Vardar",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:vardario/svelte-i18next.git"
+  },
   "type": "module",
   "main": "lib/index.js",
   "bin": {
@@ -16,9 +20,9 @@
     "build": "tsc --build",
     "format": "prettier --plugin-search-dir . --write . && prettier-package-json --write",
     "preinstall": "npx only-allow pnpm",
+    "repo-clean": "git clean -xdf -e .env",
     "test": "vitest run",
-    "watch": "tsc --watch",
-    "repo-clean": "git clean -xdf -e .env"
+    "watch": "tsc --watch"
   },
   "dependencies": {
     "commander": "^10.0.1"
@@ -37,17 +41,23 @@
     "@types/estree": "^1.0.1",
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.2.5",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
     "@vardario/svelte-ast-printer": "^1.0.0",
     "acorn": "^8.8.2",
     "astring": "^1.8.6",
     "csv-parse": "^5.4.0",
     "csv-stringify": "^6.4.0",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "husky": "^8.0.3",
-    "lint-staged": "^13.2.2",
+    "lint-staged": "^15.1.0",
     "lodash": "^4.17.21",
-    "prettier": "^2.8.8",
+    "prettier": "^3.1.0",
     "prettier-package-json": "^2.8.0",
     "prettier-plugin-organize-imports": "^3.2.2",
+    "semantic-release": "^22.0.8",
     "svelte": "4.2.7",
     "typescript": "^5.0.4",
     "vitest": "^0.31.1"
@@ -57,9 +67,5 @@
     "*": "prettier --write --ignore-unknown",
     "package.json": "prettier-package-json --write"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:vardario/svelte-i18next.git"
-  },
-  "packageManager": "pnpm@8.6.0"
+  "packageManager": "pnpm@8.10.5"
 }

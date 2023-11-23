@@ -7,8 +7,7 @@ describe('extract-i18n-keys', () => {
   test('scan folder', async () => {
     const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
     const exampleDir = path.resolve(__dirname, './assets/example');
-
-    console.log(exampleDir)
+    
 
     const keys = await extractI18NextKeys([exampleDir]);
 

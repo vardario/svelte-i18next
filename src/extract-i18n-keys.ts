@@ -6,15 +6,15 @@ import _ from 'lodash';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import * as compiler from 'svelte/compiler';
-import { Ast } from 'svelte/types/compiler/interfaces.js';
+import { Ast } from 'svelte/types/compiler/interfaces';
 import { PreprocessorGroup } from 'svelte/types/compiler/preprocess';
 import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
-import {  scanDir } from './utils.js';
+import { scanDir } from './utils.js';
 
 function extractI18nKeys(ast: Ast | Node, callIdentifier: string): string[] {
   const result: string[] = [];
 
-  compiler.walk(ast, {
+  compiler.walk(ast as Node, {
     enter: (node: any) => {
       if (node.type === 'CallExpression') {
         const callExpressionNode = node as CallExpression;

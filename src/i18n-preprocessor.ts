@@ -3,7 +3,7 @@ import { parse } from 'acorn';
 import { generate } from 'astring';
 import { CallExpression, Node } from 'estree';
 import * as compiler from 'svelte/compiler';
-import { Ast, TemplateNode } from 'svelte/types/compiler/interfaces';
+import { Ast } from 'svelte/types/compiler/interfaces';
 import type { PreprocessorGroup } from 'svelte/types/compiler/preprocess';
 import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
 
@@ -11,7 +11,7 @@ export function create18nCallLabelAttribute(callIdentifier: string, i18nKey: str
   const expression = parse(`${callIdentifier}("${i18nKey}")`, { ecmaVersion: 'latest' });
   let callExpression;
 
-  compiler.walk(expression, {
+  compiler.walk(expression as Node, {
     enter: function (node: Node) {
       if (node.type === 'CallExpression') {
         callExpression = node;
@@ -32,7 +32,7 @@ export function create18nCallLabelAttribute(callIdentifier: string, i18nKey: str
 }
 
 export function adjustI18nCall(ast: Ast | Node, prefix: string, callIdentifier: string = '$i18n') {
-  compiler.walk(ast, {
+  compiler.walk(ast as Node, {
     enter: function (node: Node) {
       if (node.type === 'CallExpression') {
         const callExpressionNode = node as CallExpression;
@@ -49,8 +49,8 @@ export function adjustI18nCall(ast: Ast | Node, prefix: string, callIdentifier: 
 }
 
 export function adjustInputElementLabels(ast: Ast, prefix: string, callIdentifier: string = '$i18n') {
-  compiler.walk(ast.html, {
-    enter: (node: TemplateNode) => {
+  compiler.walk(ast.html as Node, {
+    enter: (node: any) => {
       if (node.type === 'InlineComponent') {
         const nameAttribute = node.attributes?.find((attr: any) => attr.name === 'name');
         const labelAttribute = node.attributes?.find((attr: any) => attr.name === 'label');

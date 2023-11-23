@@ -15,13 +15,16 @@ export function parseCsv(csv: string): Record<string, string> {
     bom: true
   }) as string[][];
 
-  return items.reduce((acc, item) => {
-    if (item.length === 2) {
-      acc[item[0]] = item[1];
-    }
+  return items.reduce(
+    (acc, item) => {
+      if (item.length === 2) {
+        acc[item[0]] = item[1];
+      }
 
-    return acc;
-  }, {} as Record<string, string>);
+      return acc;
+    },
+    {} as Record<string, string>
+  );
 }
 
 export function recordsToCsv(items: Record<string, string>) {
