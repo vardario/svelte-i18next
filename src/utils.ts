@@ -26,6 +26,6 @@ export async function scanDir(dir: string, filter?: (file: string) => boolean) {
 }
 
 export function __dirname(meta: ImportMeta) {
-  const __filename = url.fileURLToPath(import.meta.url);
+  const __filename = url.fileURLToPath(meta.url);
   return path.dirname(__filename);
 }

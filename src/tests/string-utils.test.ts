@@ -1,15 +1,20 @@
+import path from 'node:path';
 import { describe, expect, test } from 'vitest';
-import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
+import { extractKeyPathFromFile, stripScriptTag } from '../string-utils.js';
+import { __dirname } from '../utils.js';
 
 describe('string-utils', () => {
   test('extractPrefixFromFile', () => {
-    expect(extractKeyPathFromFile('example/components/auth.svelte')).toBe('components.auth');
-    expect(extractKeyPathFromFile('example/components/sub-component/auth.svelte')).toBe(
+    const assetDir = path.resolve(__dirname(import.meta), './assets');
+    expect(extractKeyPathFromFile(path.resolve(assetDir, 'example/components/auth.svelte'))).toBe('components.auth');
+    expect(extractKeyPathFromFile(path.resolve(assetDir, 'example/components/sub-component/auth.svelte'))).toBe(
       'components.sub-component.auth'
     );
-    expect(extractKeyPathFromFile('example/routes/+page.svelte')).toBe('routes.page');
-    expect(extractKeyPathFromFile('example/routes/+layout.svelte')).toBe('routes.layout');
-    expect(extractKeyPathFromFile('example/routes/about/+page.svelte')).toBe('routes.about.page');
+    expect(extractKeyPathFromFile(path.resolve(assetDir, 'example/routes/+page.svelte'))).toBe('routes.page');
+    expect(extractKeyPathFromFile(path.resolve(assetDir, 'example/routes/+layout.svelte'))).toBe('routes.layout');
+    expect(extractKeyPathFromFile(path.resolve(assetDir, 'example/routes/about/+page.svelte'))).toBe(
+      'routes.about.page'
+    );
   });
 
   test('stripScriptTag', () => {

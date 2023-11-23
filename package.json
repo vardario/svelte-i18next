@@ -1,7 +1,7 @@
 {
   "name": "@vardario/svelte-i18next",
-  "version": "0.1.19",
-  "description": "",
+  "version": "0.0.0-development",
+  "description": "CLI and library to handle i18next translations in SvelteKit",
   "license": "MIT",
   "author": "Sahin Vardar",
   "type": "module",
@@ -10,9 +10,7 @@
     "svelte-i18next": "./bin/cli.js"
   },
   "files": [
-    "/lib",
-    "!/**/*.map",
-    "!/**/*.test.*"
+    "lib"
   ],
   "scripts": {
     "build": "tsc --build",
@@ -22,26 +20,34 @@
     "watch": "tsc --watch"
   },
   "dependencies": {
-    "@sveltejs/kit": "^1.20.4",
-    "@types/lodash": "^4.14.195",
-    "@vardario/svelte-ast-printer": "^0.1.7",
-    "acorn": "^8.8.2",
-    "astring": "^1.8.6",
-    "commander": "^10.0.1",
-    "csv-parse": "^5.4.0",
-    "csv-stringify": "^6.4.0",
-    "lodash": "^4.17.21",
-    "svelte": "3.59.1",
-    "typescript": "^5.0.4"
+    "commander": "^10.0.1"
+  },
+  "peerDependencies": {
+    "@sveltejs/kit": "1.x",
+    "@vardario/svelte-ast-printer": "1.x",
+    "acorn": "8.x",
+    "astring": "1.x",
+    "csv-parse": "5.x",
+    "csv-stringify": "6.x",
+    "svelte": "4.x"
   },
   "devDependencies": {
+    "@sveltejs/kit": "^1.20.4",
     "@types/estree": "^1.0.1",
+    "@types/lodash": "^4.14.195",
     "@types/node": "^20.2.5",
+    "@vardario/svelte-ast-printer": "^1.0.0",
+    "acorn": "^8.8.2",
+    "astring": "^1.8.6",
+    "csv-parse": "^5.4.0",
+    "csv-stringify": "^6.4.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
+    "lodash": "^4.17.21",
     "prettier": "^2.8.8",
     "prettier-package-json": "^2.8.0",
     "prettier-plugin-organize-imports": "^3.2.2",
+    "svelte": "4.2.7",
     "typescript": "^5.0.4",
     "vitest": "^0.31.1"
   },

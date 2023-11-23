@@ -2,12 +2,12 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import * as compiler from 'svelte/compiler';
 import { describe, expect, test } from 'vitest';
-import { i18nProcessor } from './i18n-preprocessor.js';
-import { __dirname } from './utils.js';
+import { i18nProcessor } from '../i18n-preprocessor.js';
+import { __dirname } from '../utils.js';
 //@ts-expect-error
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
-const examplePath = path.resolve(__dirname(import.meta), '../assets/example');
+const examplePath = path.resolve(__dirname(import.meta), './assets/example');
 const preprocessors = [
   vitePreprocess(),
   i18nProcessor({
