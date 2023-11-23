@@ -1,12 +1,13 @@
 import path from 'node:path';
 import url from 'node:url';
 import { describe, expect, test } from 'vitest';
-import { extractI18NextKeys } from './extract-i18n-keys';
+import { extractI18NextKeys } from '../extract-i18n-keys';
 
 describe('extract-i18n-keys', () => {
   test('scan folder', async () => {
     const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-    const exampleDir = path.resolve(__dirname, '../assets/example');
+    const exampleDir = path.resolve(__dirname, './assets/example');
+    
 
     const keys = await extractI18NextKeys([exampleDir]);
 

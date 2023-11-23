@@ -19,10 +19,13 @@ export async function synchronies(params: SynchroniesParams) {
   for (const language of params.languages) {
     const languageFile = path.resolve(params.output, language) + '.csv';
     if (!fs.existsSync(languageFile)) {
-      const translations = keys.reduce((acc, key) => {
-        acc[key] = TODO_STRING;
-        return acc;
-      }, {} as Record<string, string>);
+      const translations = keys.reduce(
+        (acc, key) => {
+          acc[key] = TODO_STRING;
+          return acc;
+        },
+        {} as Record<string, string>
+      );
 
       fs.writeFileSync(languageFile, recordsToCsv(translations));
     } else {
