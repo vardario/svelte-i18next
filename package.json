@@ -28,16 +28,16 @@
     "commander": "^10.0.1"
   },
   "peerDependencies": {
-    "@sveltejs/kit": "1.x",
     "@vardario/svelte-ast-printer": "1.x",
     "acorn": "8.x",
     "astring": "1.x",
     "csv-parse": "5.x",
     "csv-stringify": "6.x",
-    "svelte": "4.x"
+    "svelte": "4.x",
+    "@sveltejs/vite-plugin-svelte": "3.x"
   },
   "devDependencies": {
-    "@sveltejs/kit": "^1.20.4",
+    "@sveltejs/vite-plugin-svelte": "^3.1.0",
     "@types/estree": "^1.0.1",
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.2.5",

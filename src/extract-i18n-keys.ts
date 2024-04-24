@@ -1,5 +1,4 @@
-//@ts-expect-error
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import * as acorn from 'acorn';
 import { CallExpression, Node } from 'estree';
 import _ from 'lodash';
