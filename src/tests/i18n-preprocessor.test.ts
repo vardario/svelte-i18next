@@ -4,8 +4,7 @@ import * as compiler from 'svelte/compiler';
 import { describe, expect, test } from 'vitest';
 import { i18nProcessor } from '../i18n-preprocessor.js';
 import { __dirname } from '../utils.js';
-//@ts-expect-error
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 const examplePath = path.resolve(__dirname(import.meta), './assets/example');
 const preprocessors = [
