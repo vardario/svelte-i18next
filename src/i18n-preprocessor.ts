@@ -1,11 +1,10 @@
 import printHtml, { PrinterIdentOptions } from '@vardario/svelte-ast-printer';
 import { parse } from 'acorn';
-import { generate } from 'astring';
 import { CallExpression, Node } from 'estree';
 import * as compiler from 'svelte/compiler';
 import { Ast } from 'svelte/types/compiler/interfaces';
 import type { PreprocessorGroup } from 'svelte/types/compiler/preprocess';
-import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
+import { addPrefixToI18nArgument, extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
 
 export function create18nCallLabelAttribute(callIdentifier: string, i18nKey: string) {
   const expression = parse(`${callIdentifier}("${i18nKey}")`, { ecmaVersion: 'latest' });
@@ -122,17 +121,11 @@ export const i18nProcessor = (options?: I18nProcessorOptions): PreprocessorGroup
 
         adjustI18nKeys(ast, keyPath, callIdentifier);
 
+        const processedScriptTags = scriptTags.map(tag => addPrefixToI18nArgument(tag, keyPath));
+
         const transformedCode = printHtml({ ast, indent: options?.indent });
-        const result = `${scriptTags.join('\n')}${scriptTags.length ? '\n' : ''}${transformedCode}`;
+        const result = `${processedScriptTags.join('\n')}${processedScriptTags.length ? '\n' : ''}${transformedCode}`;
         return { code: result };
-      });
-    },
-    async script({ content, filename }) {
-      return preprocess(content, filename, async () => {
-        const program = parse(content, { ecmaVersion: 'latest', sourceType: 'module' }) as Node;
-        const keyPath = extractKeyPathFromFile(filename!);
-        adjustI18nCall(program, keyPath, callIdentifier);
-        return { code: generate(program) };
       });
     }
   };

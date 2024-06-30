@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { describe, expect, test } from 'vitest';
-import { extractKeyPathFromFile, stripScriptTag } from '../string-utils.js';
+import { addPrefixToI18nArgument, extractKeyPathFromFile, stripScriptTag } from '../string-utils.js';
 import { __dirname } from '../utils.js';
 
 describe('string-utils', () => {
@@ -33,5 +33,12 @@ describe('string-utils', () => {
       '<script lang="ts">let a;</script>',
       '<script context="module">let a;</script>'
     ]);
+  });
+
+  test('addPrefixToI18nArgument', () => {
+    expect(addPrefixToI18nArgument("const a = $i18n('key')", 'prefix')).toBe("const a = $i18n('prefix.key')");
+    expect(addPrefixToI18nArgument("const a = $i18n('key', { count: 1 })", 'prefix')).toBe(
+      "const a = $i18n('prefix.key', { count: 1 })"
+    );
   });
 });
