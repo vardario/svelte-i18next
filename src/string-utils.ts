@@ -29,3 +29,12 @@ export function extractKeyPathFromFile(filename: string) {
     .replace(/\[|\]/g, '')
     .replace(/\((.+)\)\./, '');
 }
+
+export function addPrefixToI18nArgument(input: string, prefix: string): string {
+  const regex = /\$i18n\(\s*(['"])(.*?)\1(\s*,\s*[^)]*)?\s*\)/g;
+
+  return input.replace(regex, (_, quote, arg, rest) => {
+    const prefixedArg = `${prefix}.${arg}`;
+    return `$i18n(${quote}${prefixedArg}${quote}${rest || ''})`;
+  });
+}

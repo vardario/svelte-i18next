@@ -30,7 +30,6 @@
   "peerDependencies": {
     "@vardario/svelte-ast-printer": "1.x",
     "acorn": "8.x",
-    "astring": "1.x",
     "csv-parse": "5.x",
     "csv-stringify": "6.x",
     "svelte": "4.x",
@@ -45,7 +44,6 @@
     "@typescript-eslint/parser": "^6.11.0",
     "@vardario/svelte-ast-printer": "^1.0.0",
     "acorn": "^8.8.2",
-    "astring": "^1.8.6",
     "csv-parse": "^5.4.0",
     "csv-stringify": "^6.4.0",
     "eslint": "^8.54.0",
@@ -67,5 +65,5 @@
     "*": "prettier --write --ignore-unknown",
     "package.json": "prettier-package-json --write"
   },
-  "packageManager": "pnpm@8.10.5"
+  "packageManager": "pnpm@9.1.0"
 }
