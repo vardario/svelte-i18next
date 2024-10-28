@@ -1,16 +1,15 @@
 import printHtml, { PrinterIdentOptions } from '@vardario/svelte-ast-printer';
-import { parse } from 'acorn';
+import { parse as scriptParse } from 'acorn';
 import { CallExpression, Node } from 'estree';
-import * as compiler from 'svelte/compiler';
-import { Ast } from 'svelte/types/compiler/interfaces';
-import type { PreprocessorGroup } from 'svelte/types/compiler/preprocess';
+import { walk } from 'estree-walker';
 import { addPrefixToI18nArgument, extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
+import { AST, type PreprocessorGroup, parse as svelteParse } from 'svelte/compiler';
 
 export function create18nCallLabelAttribute(callIdentifier: string, i18nKey: string) {
-  const expression = parse(`${callIdentifier}("${i18nKey}")`, { ecmaVersion: 'latest' });
+  const expression = scriptParse(`${callIdentifier}("${i18nKey}")`, { ecmaVersion: 'latest' });
   let callExpression;
 
-  compiler.walk(expression as Node, {
+  walk(expression as Node, {
     enter: function (node: Node) {
       if (node.type === 'CallExpression') {
         callExpression = node;
@@ -23,15 +22,15 @@ export function create18nCallLabelAttribute(callIdentifier: string, i18nKey: str
     name: 'label',
     value: [
       {
-        type: 'MustacheTag',
+        type: 'ExpressionTag',
         expression: callExpression
       }
     ]
   };
 }
 
-export function adjustI18nCall(ast: Ast | Node, prefix: string, callIdentifier: string = '$i18n') {
-  compiler.walk(ast as Node, {
+export function adjustI18nCall(root: any, prefix: string, callIdentifier: string = '$i18n') {
+  walk(root, {
     enter: function (node: Node) {
       if (node.type === 'CallExpression') {
         const callExpressionNode = node as CallExpression;
@@ -47,10 +46,10 @@ export function adjustI18nCall(ast: Ast | Node, prefix: string, callIdentifier: 
   });
 }
 
-export function adjustInputElementLabels(ast: Ast, prefix: string, callIdentifier: string = '$i18n') {
-  compiler.walk(ast.html as Node, {
+export function adjustInputElementLabels(fragment: any, prefix: string, callIdentifier: string = '$i18n') {
+  walk(fragment, {
     enter: (node: any) => {
-      if (node.type === 'InlineComponent') {
+      if (node.type === 'Component') {
         const nameAttribute = node.attributes?.find((attr: any) => attr.name === 'name');
         const labelAttribute = node.attributes?.find((attr: any) => attr.name === 'label');
 
@@ -65,12 +64,12 @@ export function adjustInputElementLabels(ast: Ast, prefix: string, callIdentifie
   });
 }
 
-export function adjustI18nKeys(ast: Ast, prefix: string, callIdentifier: string = '$i18n'): string[] {
+export function adjustI18nKeys(root: AST.Root, prefix: string, callIdentifier: string = '$i18n'): string[] {
   const result: string[] = [];
-
-  adjustI18nCall(ast, prefix, callIdentifier);
-  adjustInputElementLabels(ast, prefix, callIdentifier);
-
+  if (root.instance) {
+    adjustI18nCall(root.instance, prefix, callIdentifier);
+  }
+  adjustInputElementLabels(root.fragment, prefix, callIdentifier);
   return result;
 }
 
@@ -116,14 +115,13 @@ export const i18nProcessor = (options?: I18nProcessorOptions): PreprocessorGroup
     async markup({ content, filename }) {
       return preprocess(content, filename, async () => {
         const { code, scriptTags } = stripScriptTag(content);
-        const ast = compiler.parse(code);
+        const root = svelteParse(code, { modern: true });
         const keyPath = extractKeyPathFromFile(filename!);
 
-        adjustI18nKeys(ast, keyPath, callIdentifier);
+        adjustI18nKeys(root, keyPath, callIdentifier);
 
         const processedScriptTags = scriptTags.map(tag => addPrefixToI18nArgument(tag, keyPath));
-
-        const transformedCode = printHtml({ ast, indent: options?.indent });
+        const transformedCode = printHtml(root, options?.indent);
         const result = `${processedScriptTags.join('\n')}${processedScriptTags.length ? '\n' : ''}${transformedCode}`;
         return { code: result };
       });

@@ -4,16 +4,15 @@ import { CallExpression, Node } from 'estree';
 import _ from 'lodash';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import * as compiler from 'svelte/compiler';
-import { Ast } from 'svelte/types/compiler/interfaces';
-import { PreprocessorGroup } from 'svelte/types/compiler/preprocess';
+import { walk } from 'estree-walker';
 import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
 import { scanDir } from './utils.js';
+import { preprocess, PreprocessorGroup, parse } from 'svelte/compiler';
 
-function extractI18nKeys(ast: Ast | Node, callIdentifier: string): string[] {
+function extractI18nKeys(root: any, callIdentifier: string): string[] {
   const result: string[] = [];
 
-  compiler.walk(ast as Node, {
+  walk(root, {
     enter: (node: any) => {
       if (node.type === 'CallExpression') {
         const callExpressionNode = node as CallExpression;
@@ -26,7 +25,7 @@ function extractI18nKeys(ast: Ast | Node, callIdentifier: string): string[] {
         }
       }
 
-      if (node.type === 'InlineComponent') {
+      if (node.type === 'Component') {
         const nameAttribute = node.attributes?.find((attr: any) => attr.name === 'name');
         if (nameAttribute) {
           result.push(nameAttribute.value[0].data);
@@ -51,8 +50,8 @@ export async function processSvelteFile(
     return {
       async markup({ content, filename }) {
         const { code } = stripScriptTag(rawCode);
-        const ast = compiler.parse(code);
-        keys.push(...extractI18nKeys(ast, callIdentifier));
+        const ast = parse(code, { modern: true });
+        keys.push(...extractI18nKeys(ast.fragment, callIdentifier));
         return { code: content };
       },
       async script({ content, filename }) {
@@ -63,7 +62,7 @@ export async function processSvelteFile(
     };
   };
 
-  await compiler.preprocess(rawCode, [vitePreprocess(), preprocessExtract()], { filename });
+  await preprocess(rawCode, [vitePreprocess(), preprocessExtract()], { filename });
 
   const addKeyPath = (key: string) => {
     const path = extractKeyPathFromFile(filename);
