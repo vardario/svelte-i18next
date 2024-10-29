@@ -5,9 +5,10 @@ import _ from 'lodash';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { walk } from 'estree-walker';
-import { extractKeyPathFromFile, stripScriptTag } from './string-utils.js';
+import { extractKeyPathFromFile } from './string-utils.js';
 import { scanDir } from './utils.js';
 import { preprocess, PreprocessorGroup, parse } from 'svelte/compiler';
+import printAst from '@vardario/svelte-ast-printer';
 
 function extractI18nKeys(root: any, callIdentifier: string): string[] {
   const result: string[] = [];
@@ -49,15 +50,17 @@ export async function processSvelteFile(
   const preprocessExtract = (): PreprocessorGroup => {
     return {
       async markup({ content, filename }) {
-        const { code } = stripScriptTag(rawCode);
-        const ast = parse(code, { modern: true });
+        const ast = parse(content, { modern: true });
         keys.push(...extractI18nKeys(ast.fragment, callIdentifier));
-        return { code: content };
-      },
-      async script({ content, filename }) {
-        const ast = acorn.parse(content, { ecmaVersion: 'latest', sourceType: 'module' }) as Node;
-        keys.push(...extractI18nKeys(ast, callIdentifier));
-        return { code: content };
+        if (ast.instance) {
+          keys.push(...extractI18nKeys(ast.instance.content, callIdentifier));
+        }
+
+        if (ast.module) {
+          keys.push(...extractI18nKeys(ast.module.content, callIdentifier));
+        }
+
+        return { code: printAst(ast) };
       }
     };
   };

@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { describe, expect, test } from 'vitest';
-import { addPrefixToI18nArgument, extractKeyPathFromFile, stripScriptTag } from '../string-utils.js';
+import { addPrefixToI18nArgument, extractKeyPathFromFile } from '../string-utils.js';
 import { __dirname } from '../utils.js';
 
 describe('string-utils', () => {
@@ -15,24 +15,6 @@ describe('string-utils', () => {
     expect(extractKeyPathFromFile(path.resolve(assetDir, 'example/routes/about/+page.svelte'))).toBe(
       'routes.about.page'
     );
-  });
-
-  test('stripScriptTag', () => {
-    const result0 = stripScriptTag('<script lang="ts">let a;</script><main/>');
-    const result1 = stripScriptTag('<script>let a;</script><main/>');
-    const result2 = stripScriptTag('<script lang="ts">let a;</script><script context="module">let a;</script><main/>');
-
-    expect(result0.code).toBe('<main/>');
-    expect(result0.scriptTags).toStrictEqual(['<script lang="ts">let a;</script>']);
-
-    expect(result1.code).toBe('<main/>');
-    expect(result1.scriptTags).toStrictEqual(['<script>let a;</script>']);
-
-    expect(result2.code).toBe('<main/>');
-    expect(result2.scriptTags).toStrictEqual([
-      '<script lang="ts">let a;</script>',
-      '<script context="module">let a;</script>'
-    ]);
   });
 
   test('addPrefixToI18nArgument', () => {
