@@ -28,8 +28,8 @@
     "commander": "^10.0.1"
   },
   "peerDependencies": {
-    "@sveltejs/vite-plugin-svelte": "3.x",
-    "@vardario/svelte-ast-printer": "2.x",
+    "@sveltejs/vite-plugin-svelte": "4.x",
+    "@vardario/svelte-ast-printer": "^2.0.3",
     "acorn": "8.x",
     "csv-parse": "5.x",
     "csv-stringify": "6.x",
