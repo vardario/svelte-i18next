@@ -31,7 +31,7 @@ importers:
         specifier: ^6.11.0
         version: 6.12.0(eslint@8.54.0)(typescript@5.0.4)
       '@vardario/svelte-ast-printer':
-        specifier: ^2.0.3
+        specifier: 2.0.3
         version: 2.0.3(astring@1.8.6)(lodash@4.17.21)(svelte@5.1.3)
       acorn:
         specifier: ^8.8.2
@@ -607,7 +607,7 @@ packages:
     peerDependencies:
       astring: 1.x
       lodash: 4.x
-      svelte: 5.x
+      svelte: ^5.1.4
 
   '@vitest/expect@2.1.4':
     resolution: {integrity: sha512-DOETT0Oh1avie/D/o2sgMHGrzYUFFo3zqESB2Hn70z6QB1HrS2IQ9z5DfyTqU8sg4Bpu13zZe9V4+UTNQlUeQA==}
