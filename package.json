@@ -29,7 +29,7 @@
   },
   "peerDependencies": {
     "@sveltejs/vite-plugin-svelte": "4.x",
-    "@vardario/svelte-ast-printer": "^2.0.3",
+    "@vardario/svelte-ast-printer": "2.0.3",
     "acorn": "8.x",
     "csv-parse": "5.x",
     "csv-stringify": "6.x",
@@ -43,7 +43,7 @@
     "@types/node": "^20.2.5",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
-    "@vardario/svelte-ast-printer": "^2.0.3",
+    "@vardario/svelte-ast-printer": "2.0.3",
     "acorn": "^8.8.2",
     "csv-parse": "^5.4.0",
     "csv-stringify": "^6.4.0",
