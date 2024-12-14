@@ -1,6 +1,4 @@
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import * as acorn from 'acorn';
-import { CallExpression, Node } from 'estree';
+import { CallExpression } from 'estree';
 import _ from 'lodash';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -49,23 +47,15 @@ export async function processSvelteFile(
   const filename = path.relative(dirSvelteApp, file);
   const preprocessExtract = (): PreprocessorGroup => {
     return {
-      async markup({ content, filename }) {
+      async markup({ content }) {
         const ast = parse(content, { modern: true });
-        keys.push(...extractI18nKeys(ast.fragment, callIdentifier));
-        if (ast.instance) {
-          keys.push(...extractI18nKeys(ast.instance.content, callIdentifier));
-        }
-
-        if (ast.module) {
-          keys.push(...extractI18nKeys(ast.module.content, callIdentifier));
-        }
-
+        keys.push(...extractI18nKeys(ast, callIdentifier));
         return { code: printAst(ast) };
       }
     };
   };
 
-  await preprocess(rawCode, [vitePreprocess(), preprocessExtract()], { filename });
+  await preprocess(rawCode, [preprocessExtract()], { filename });
 
   const addKeyPath = (key: string) => {
     const path = extractKeyPathFromFile(filename);
