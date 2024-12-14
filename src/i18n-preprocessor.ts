@@ -3,8 +3,9 @@ import { parse as scriptParse } from 'acorn';
 import { CallExpression, Node } from 'estree';
 import { walk } from 'estree-walker';
 import { extractKeyPathFromFile } from './string-utils.js';
-import { AST, type PreprocessorGroup, parse as svelteParse } from 'svelte/compiler';
+import { AST, type PreprocessorGroup, parse } from 'svelte/compiler';
 import printAst from '@vardario/svelte-ast-printer';
+import { formatSvelte } from './utils.js';
 
 export function create18nCallLabelAttribute(callIdentifier: string, i18nKey: string) {
   const expression = scriptParse(`${callIdentifier}("${i18nKey}")`, { ecmaVersion: 'latest' });
@@ -68,9 +69,15 @@ export function adjustInputElementLabels(fragment: any, prefix: string, callIden
 export function adjustI18nKeys(root: AST.Root, prefix: string, callIdentifier: string = '$i18n'): string[] {
   const result: string[] = [];
   if (root.instance) {
-    adjustI18nCall(root.instance, prefix, callIdentifier);
+    adjustI18nCall(root.instance.content, prefix, callIdentifier);
   }
+
+  if (root.module) {
+    adjustI18nCall(root.module.content, prefix, callIdentifier);
+  }
+
   adjustInputElementLabels(root.fragment, prefix, callIdentifier);
+  adjustI18nCall(root.fragment, prefix, callIdentifier);
   return result;
 }
 
@@ -115,12 +122,12 @@ export const i18nProcessor = (options?: I18nProcessorOptions): PreprocessorGroup
   return {
     async markup({ content, filename }) {
       return preprocess(content, filename, async () => {
-        const root = svelteParse(content, { modern: true });
+        const root = parse(content, { modern: true });
         const keyPath = extractKeyPathFromFile(filename!);
-
         adjustI18nKeys(root, keyPath, callIdentifier);
 
-        return { code: printAst(root, options?.indent) };
+        const code = await formatSvelte(printAst(root, options?.indent));
+        return { code };
       });
     }
   };
