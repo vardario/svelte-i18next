@@ -26,7 +26,7 @@
     "prune-branches": "git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D"
   },
   "dependencies": {
-    "@vardario/svelte-ast-printer": "^2.1.2",
+    "@vardario/svelte-ast-printer": "^2.1.3",
     "acorn": "^8.8.2",
     "commander": "^10.0.1",
     "csv-parse": "^5.4.0",
