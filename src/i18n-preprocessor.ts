@@ -76,8 +76,8 @@ export function adjustI18nKeys(root: AST.Root, prefix: string, callIdentifier: s
     adjustI18nCall(root.module.content, prefix, callIdentifier);
   }
 
-  adjustInputElementLabels(root.fragment, prefix, callIdentifier);
   adjustI18nCall(root.fragment, prefix, callIdentifier);
+  adjustInputElementLabels(root.fragment, prefix, callIdentifier);
   return result;
 }
 

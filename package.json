@@ -22,7 +22,8 @@
     "preinstall": "npx only-allow pnpm",
     "repo-clean": "git clean -xdf -e .env",
     "test": "vitest run",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "prune-branches": "git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D"
   },
   "dependencies": {
     "@vardario/svelte-ast-printer": "^2.1.2",
