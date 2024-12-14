@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@vardario/svelte-ast-printer':
-        specifier: ^2.1.1
-        version: 2.1.1(svelte@5.1.3)
+        specifier: ^2.1.2
+        version: 2.1.2(svelte@5.1.3)
       acorn:
         specifier: ^8.8.2
         version: 8.14.0
@@ -584,13 +584,13 @@ packages:
   '@ungap/structured-clone@1.2.1':
     resolution: {integrity: sha512-fEzPV3hSkSMltkw152tJKNARhOupqbH96MZWyRjNaYZOMIzbrTeQDG+MTc6Mr2pgzFQzFxAfmhGDNP5QK++2ZA==}
 
-  '@vardario/astring-ts-generator@1.1.0':
-    resolution: {integrity: sha512-gLIXskiw5/79UjvXL8BC7ORYJ/5xYKwys2e248bhrm06QzEXnNSTuEaDW3ZxfYN+04nAuAbONdbHXNeD9GCGbg==}
+  '@vardario/astring-ts-generator@1.1.1':
+    resolution: {integrity: sha512-RGDZeYbAeebfaXR6qGux9spMFEU3GBFyclMUXvAJcfWNcNz23ZASXxmcfg2A3Iz3PareTvvpLYSOa3XSIJjNVA==}
     peerDependencies:
       astring: ^1.9.0
 
-  '@vardario/svelte-ast-printer@2.1.1':
-    resolution: {integrity: sha512-RD+lM3EhLVCavpg93JhuA5maFwyzgy6yNcdOxvZhO5rZvn/D/4BF+D8WnaDL2BzzjmGRWuevBu1E/td0xaLbCw==}
+  '@vardario/svelte-ast-printer@2.1.2':
+    resolution: {integrity: sha512-k4/AULlAPbZfRsO1JFwR29SIhCKIy7xc+dpcm1pZSvVy5PYxUGdsBizhKz2i/Id//G4tEkhi7H7e29Qhzh+VYA==}
     peerDependencies:
       svelte: 5.x
 
@@ -2677,13 +2677,13 @@ snapshots:
 
   '@ungap/structured-clone@1.2.1': {}
 
-  '@vardario/astring-ts-generator@1.1.0(astring@1.9.0)':
+  '@vardario/astring-ts-generator@1.1.1(astring@1.9.0)':
     dependencies:
       astring: 1.9.0
 
-  '@vardario/svelte-ast-printer@2.1.1(svelte@5.1.3)':
+  '@vardario/svelte-ast-printer@2.1.2(svelte@5.1.3)':
     dependencies:
-      '@vardario/astring-ts-generator': 1.1.0(astring@1.9.0)
+      '@vardario/astring-ts-generator': 1.1.1(astring@1.9.0)
       astring: 1.9.0
       commander: 10.0.1
       estree-walker: 3.0.3
