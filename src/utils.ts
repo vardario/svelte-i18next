@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import url from 'node:url';
 import prettier from 'prettier';
+import prettierPluginSvelte from 'prettier-plugin-svelte';
 
 export async function scanDir(dir: string, filter?: (file: string) => boolean) {
   const result: string[] = [];
@@ -34,6 +35,6 @@ export function __dirname(meta: ImportMeta) {
 export async function formatSvelte(code: string) {
   return prettier.format(code, {
     parser: 'svelte',
-    plugins: [require('prettier-plugin-svelte')]
+    plugins: [prettierPluginSvelte]
   });
 }
