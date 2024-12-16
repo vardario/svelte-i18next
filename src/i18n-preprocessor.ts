@@ -129,6 +129,14 @@ export const i18nProcessor = (options?: I18nProcessorOptions): PreprocessorGroup
         const code = await formatSvelte(printAst(root, options?.indent));
         return { code };
       });
+    },
+    /**
+     * We need this passthrough so that the svelte compiler generates
+     * the right source maps for debugging purposes. 
+     * @see https://github.com/sveltejs/svelte/blob/bbf38291fcd860319c7eb225f3f942188c1d97bd/packages/svelte/src/compiler/preprocess/index.js#L357
+     */
+    async script({ content }) {
+      return { code: content };
     }
   };
 };
