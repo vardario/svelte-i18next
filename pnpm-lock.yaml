@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@vardario/svelte-ast-printer':
-        specifier: ^2.1.4
-        version: 2.1.4(svelte@5.1.3)
+        specifier: ^2.1.5
+        version: 2.1.5(svelte@5.1.3)
       acorn:
         specifier: ^8.8.2
         version: 8.14.0
@@ -589,8 +589,8 @@ packages:
     peerDependencies:
       astring: ^1.9.0
 
-  '@vardario/svelte-ast-printer@2.1.4':
-    resolution: {integrity: sha512-adOm+RGew88ZPXFoM9YW+t5ZVK2PA3QXB3mUXWy5lfP4unfn8tR4tTng6oeRsnwkLzi1eQ3HdmKE9NVLG72koQ==}
+  '@vardario/svelte-ast-printer@2.1.5':
+    resolution: {integrity: sha512-/OrfWUtv2vIv/EM+xVUBUCIZssDeHoFwaGC5rqGKdR4gTVuFxtKcgNFp+SrrbYKW1MJIG4o3eO13QwnXZ74rCQ==}
     peerDependencies:
       svelte: 5.x
 
@@ -2681,7 +2681,7 @@ snapshots:
     dependencies:
       astring: 1.9.0
 
-  '@vardario/svelte-ast-printer@2.1.4(svelte@5.1.3)':
+  '@vardario/svelte-ast-printer@2.1.5(svelte@5.1.3)':
     dependencies:
       '@vardario/astring-ts-generator': 1.1.2(astring@1.9.0)
       astring: 1.9.0
