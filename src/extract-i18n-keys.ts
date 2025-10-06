@@ -66,7 +66,8 @@ export async function processSvelteFile(
 }
 
 export async function extractI18NextKeys(dirSvelteApps: string[]) {
-  const svelteRegEx = /^.*\.svelte/;
+  // Matches .svelte files but excludes .svelte.js and .svelte.ts
+  const svelteRegEx = /^.*\.svelte(?!(\.js|\.ts))$/;
 
   const result: string[] = [];
 
