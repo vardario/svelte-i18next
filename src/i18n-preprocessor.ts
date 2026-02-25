@@ -5,7 +5,6 @@ import { walk } from 'estree-walker';
 import { extractKeyPathFromFile } from './string-utils.js';
 import { AST, type PreprocessorGroup, parse } from 'svelte/compiler';
 import printAst from '@vardario/svelte-ast-printer';
-import { formatSvelte } from './utils.js';
 
 export function create18nCallLabelAttribute(callIdentifier: string, i18nKey: string) {
   const expression = scriptParse(`${callIdentifier}("${i18nKey}")`, { ecmaVersion: 'latest' });
@@ -125,14 +124,12 @@ export const i18nProcessor = (options?: I18nProcessorOptions): PreprocessorGroup
         const root = parse(content, { modern: true });
         const keyPath = extractKeyPathFromFile(filename!);
         adjustI18nKeys(root, keyPath, callIdentifier);
-
-        const code = await formatSvelte(printAst(root, options?.indent));
-        return { code };
+        return { code: printAst(root, options?.indent) };
       });
     },
     /**
      * We need this passthrough so that the svelte compiler generates
-     * the right source maps for debugging purposes. 
+     * the right source maps for debugging purposes.
      * @see https://github.com/sveltejs/svelte/blob/bbf38291fcd860319c7eb225f3f942188c1d97bd/packages/svelte/src/compiler/preprocess/index.js#L357
      */
     async script({ content }) {
