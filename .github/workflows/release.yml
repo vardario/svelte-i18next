@@ -22,4 +22,3 @@ jobs:
       - run: pnpm semantic-release
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
