@@ -3,7 +3,16 @@ import path from 'node:path';
 import * as compiler from 'svelte/compiler';
 import { describe, expect, test } from 'vitest';
 import { i18nProcessor } from '../i18n-preprocessor.js';
-import { __dirname, formatSvelte } from '../utils.js';
+import { __dirname } from '../utils.js';
+import prettier from 'prettier';
+import prettierPluginSvelte from 'prettier-plugin-svelte';
+
+async function formatSvelte(code: string) {
+  return prettier.format(code, {
+    parser: 'svelte',
+    plugins: [prettierPluginSvelte]
+  });
+}
 
 const examplePath = path.resolve(__dirname(import.meta), './assets/example');
 
