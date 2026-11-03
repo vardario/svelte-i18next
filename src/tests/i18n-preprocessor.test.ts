@@ -84,4 +84,34 @@ describe('i18n-preprocessor', () => {
       `
     );
   });
+
+  // The printer must keep the markup it does not translate: {:else} branches that contain an {#if}, quoted attribute
+  // values with expressions and function bindings.
+  test('keeps else branches, attribute expressions and function bindings', async () => {
+    await testComponent(
+      'components/markup.svelte',
+      `
+      <script lang="ts">
+        let { step, busy, width, id, open = $bindable() } = $props();
+        const setOpen = (value: boolean) => (open = value);
+      </script>
+
+      <Dialog bind:open={() => open, setOpen}>
+        <ol class="steps {step > 1 ? 'done' : 'open'}" data-testid="row-{id}">
+          <li style="width: {width}%">{$i18n("components.markup.step")}</li>
+        </ol>
+        {#if step === 0}
+          <p>{$i18n("components.markup.file")}</p>
+        {:else if step === 1}
+          <p>{$i18n("components.markup.mapping")}</p>
+        {:else}
+          <p>{$i18n("components.markup.result")}</p>
+          {#if busy}
+            <p>{$i18n("components.markup.busy")}</p>
+          {/if}
+        {/if}
+      </Dialog>
+      `
+    );
+  });
 });
