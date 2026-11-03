@@ -1,6 +1,11 @@
 ﻿components.auth.firstName;xxxTODOxxx
 components.auth.lastName;xxxTODOxxx
 components.auth.password;xxxTODOxxx
+components.markup.busy;busy
+components.markup.file;file
+components.markup.mapping;mapping
+components.markup.result;result
+components.markup.step;step
 components.user-form.amenities;xxxTODOxxx
 components.user-form.countryCode;xxxTODOxxx
 components.user-form.firstName;xxxTODOxxx
